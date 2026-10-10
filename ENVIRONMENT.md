@@ -145,3 +145,6 @@ Android gateway endpoint (POST JSON `{to, text, sender}`).
 
 ## PHONE_ENCRYPTION_KEY
 Server-only, 32+ random characters. Encrypts stored phone numbers (AES-GCM) and hashes codes.
+
+## SPOTIFY_CLIENT_ID / SPOTIFY_CLIENT_SECRET
+Live Presence (Studio → Verbindingen & Integraties). Create an app at developer.spotify.com/dashboard and add the redirect URI `<PUBLIC_SITE_URL>/api/public/spotify/callback`. Needs `PSP_ENCRYPTION_KEY` too (tokens are encrypted).

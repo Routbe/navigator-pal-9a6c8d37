@@ -38,3 +38,4 @@
 - Community stats are live counts; reviews show only when `approved` (db/65); empty sections hide. Why: no fake social proof.
 - Approving a verification cancels that user's other open same-tier requests (`verification-dedupe.ts`). Why: no duplicate admin work.
 - Vercel builds use nitro's `vercel` preset (auto via `VERCEL`); the sandbox forces cloudflare, so test with sandbox env vars unset. Why: sandbox ignores preset overrides.
+- Live Presence providers (Spotify first) store sealed tokens in `user_presence_connections` (db/68) and are read publicly only via `/api/presence/now-playing`, which requires the member's `show_on_profile` opt-in. Why: tokens never leave the server and visitors see only opted-in track info.
