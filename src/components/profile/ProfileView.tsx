@@ -1,3 +1,4 @@
+import { NowPlaying } from "@/components/profile/NowPlaying";
 import { cn } from "@/lib/utils";
 import {
   backgroundLayerStyle,
@@ -383,6 +384,7 @@ export function ProfileView({
           )}
         </h1>
         {!free && <CustomBadgeRow handle={profile.username} mutedColor={t.muted} />}
+        {profile.username && <NowPlaying handle={profile.username} theme={t} />}
 
         {earlyBeliever && (
           <EarlyBelieverBadge
