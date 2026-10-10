@@ -1,0 +1,16 @@
+{
+  "source": "github",
+  "repo": "https://github.com/Routbe/navigator-pal-494d9f54.git",
+  "capabilities": [
+    { "capability": "application code (TanStack Start, same stack as target)", "source": "repo src/", "outcome": "copied into project, typecheck clean, preview 200", "status": "verified", "next_action": null },
+    { "capability": "client-side QR vector engine (SVG/PDF/EPS)", "source": "src/", "outcome": "homepage renders and generates client-side", "status": "verified", "next_action": null },
+    { "capability": "database schema (67 SQL migrations, Neon Postgres)", "source": "db/*.sql", "outcome": "preserved as external Neon provider; migrations not yet applied anywhere", "status": "pending", "next_action": "user provides DATABASE_URL (and MIGRATION_URL) via secure secret form, or approves move to Lovable Cloud" },
+    { "capability": "auth (Better Auth + WebAuthn passkeys + OAuth broker)", "source": "src/lib/auth, src/routes/api_.auth.$.ts", "outcome": "code imported; requires BETTER_AUTH_SECRET/URL and DATABASE_URL", "status": "pending", "next_action": "secrets needed before sign-in can be verified" },
+    { "capability": "payments (Stripe checkout, Connect, webhooks)", "source": "src/lib/billing.*, api routes", "outcome": "Stripe account preserved; code imported", "status": "pending", "next_action": "Stripe keys via secure secret form before live verification" },
+    { "capability": "email (Brevo templates)", "source": "src/emails, scripts/audit-brevo-templates.ts", "outcome": "code imported", "status": "pending", "next_action": "Brevo API key needed" },
+    { "capability": "SMS/phone verification (android-gateway/twilio/brevo)", "source": "ENVIRONMENT.md", "outcome": "optional; shows 'not configured' without keys", "status": "pending", "next_action": "optional keys" },
+    { "capability": "public API routes, webhooks, cron targets (api_.public.*)", "source": "src/routes/api_.public.*", "outcome": "routes imported", "status": "pending", "next_action": "verify after DATABASE_URL is set" },
+    { "capability": "records / user data export", "source": "none attached", "outcome": "no record export in repo", "status": "pending", "next_action": "request CSV/JSON exports from Neon dashboard if existing data must come along" },
+    { "capability": "secrets", "source": "ENVIRONMENT.md (.env.example)", "outcome": "no secret values in repo (correct); none copied", "status": "pending", "next_action": "request required values through Lovable secure secret form" }
+  ]
+}
