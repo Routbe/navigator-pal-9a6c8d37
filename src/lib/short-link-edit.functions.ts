@@ -1,6 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { requireAuth } from "@/lib/auth/middleware";
+import { shortLinkTargetBlocked } from "@/lib/short-link-target";
 
 const inputSchema = z.object({
   id: z.string().uuid(),
@@ -15,7 +16,8 @@ const inputSchema = z.object({
       } catch {
         return false;
       }
-    }, "Alleen https://-URL's zijn toegestaan."),
+    }, "Alleen https://-URL's zijn toegestaan.")
+    .refine((v) => !shortLinkTargetBlocked(v), "Deze bestemming is niet toegestaan."),
 });
 
 /**
