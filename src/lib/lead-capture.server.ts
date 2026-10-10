@@ -72,8 +72,10 @@ export async function captureLead(input: LeadInput): Promise<{ ok: boolean; mess
     });
   }
 
-  // Welkomstmail naar de inschrijver zelf.
-  await sendLeadWelcome({
+  // Welkomstmail naar de inschrijver zelf — max. één per adres per dag.
+  const { hitRateLimit } = await import("./rate-limit-db.server");
+  const welcomeLimit = await hitRateLimit("lead-welcome-to", input.email.toLowerCase(), { limit: 1, windowSec: 86_400 });
+  if (welcomeLimit.ok) await sendLeadWelcome({
     to: input.email,
     name: input.name,
     ownerName: owner.displayName ?? owner.username,
