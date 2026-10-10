@@ -25,6 +25,41 @@ export interface ProfileBlock {
   pinned?: boolean;
   /** Eigen links: favicon van de website (standaard) of een universele wereldbol. */
   iconMode?: "favicon" | "globe";
+  /** Context-aware rendering: when the block may show. Default always_visible. */
+  visibilityRule?: BlockVisibilityRule;
+  /** Pro/Social switch: Global blocks always show. Default global. */
+  contextTag?: BlockContextTag;
+}
+
+export type BlockVisibilityRule = "always_visible" | "hide_when_focus_mode" | "show_only_when_live";
+export type BlockContextTag = "global" | "professional" | "social";
+export type ProfileContext = "professional" | "social";
+
+/** Live state of the owner, as far as the visibility rules care. */
+export interface LiveState {
+  /** Status dot is "focus" or "dnd". */
+  focus: boolean;
+  /** Status dot is "online". */
+  live: boolean;
+}
+
+export function liveStateFromPresence(presence: string | null | undefined): LiveState {
+  return { focus: presence === "focus" || presence === "dnd", live: presence === "online" };
+}
+
+/** Drops blocks whose visibility rule doesn't match the owner's live state. */
+export function applyVisibilityRules<T extends Pick<ProfileBlock, "visibilityRule">>(blocks: T[], state: LiveState): T[] {
+  return blocks.filter((b) => {
+    if (b.visibilityRule === "hide_when_focus_mode") return !state.focus;
+    if (b.visibilityRule === "show_only_when_live") return state.live;
+    return true;
+  });
+}
+
+/** Pro/Social view: Global blocks always, others only in their own context. */
+export function filterByContext<T extends Pick<ProfileBlock, "contextTag">>(blocks: T[], context: ProfileContext | null): T[] {
+  if (!context) return blocks;
+  return blocks.filter((b) => !b.contextTag || b.contextTag === "global" || b.contextTag === context);
 }
 
 /**
