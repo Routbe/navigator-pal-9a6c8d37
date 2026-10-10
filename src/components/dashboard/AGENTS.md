@@ -1,0 +1,1 @@
+- ROUT-presets are the only one-click styling; applying one always sets `backgroundCustom=false` via `presetPrefEntries`, and background fine-tuning lives behind that switch. Why: one source of truth, no duplicate theme lists.
