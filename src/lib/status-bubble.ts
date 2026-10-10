@@ -13,11 +13,11 @@ export type BubbleStyle = (typeof BUBBLE_STYLES)[number]["id"];
 
 export const BUBBLE_FONTS = [
   { id: "theme", label: "Thema", css: "inherit" },
-  { id: "sans", label: "Sans", css: "ui-sans-serif, system-ui, sans-serif" },
-  { id: "serif", label: "Serif", css: "ui-serif, Georgia, serif" },
-  { id: "mono", label: "Mono", css: "ui-monospace, SFMono-Regular, monospace" },
-  { id: "rounded", label: "Rond", css: "ui-rounded, 'Nunito', system-ui, sans-serif" },
-  { id: "hand", label: "Handschrift", css: "'Comic Sans MS', 'Chalkboard SE', cursive" },
+  { id: "sans", label: "Sans", css: "ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji'" },
+  { id: "serif", label: "Serif", css: "ui-serif, Georgia, serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji'" },
+  { id: "mono", label: "Mono", css: "ui-monospace, SFMono-Regular, monospace, 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji'" },
+  { id: "rounded", label: "Rond", css: "ui-rounded, 'Nunito', system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji'" },
+  { id: "hand", label: "Handschrift", css: "'Comic Sans MS', 'Chalkboard SE', cursive, 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji'" },
 ] as const;
 export type BubbleFont = (typeof BUBBLE_FONTS)[number]["id"];
 
