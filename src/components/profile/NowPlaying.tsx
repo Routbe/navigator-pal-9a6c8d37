@@ -16,7 +16,7 @@ export function NowPlaying({ handle, theme }: { handle: string; theme: { card: s
   const d = q.data;
   if (!d?.playing) return null;
   const body = (
-    <div className="flex items-center gap-3 rounded-2xl p-2.5 pr-4" style={{ background: t(theme).card, border: `1px solid ${theme.border}`, color: theme.text }}>
+    <div className="flex items-center gap-3 rounded-2xl p-2.5 pr-4" style={{ background: theme.card, border: `1px solid ${theme.border}`, color: theme.text }}>
       {d.image ? <img src={d.image} alt="" className="h-12 w-12 rounded-lg object-cover" /> : <span className="h-12 w-12 rounded-lg" style={{ background: theme.border }} />}
       <span className="min-w-0 text-left">
         <span className="flex items-center gap-1.5 text-[10px] uppercase tracking-wider" style={{ color: theme.muted }}>
@@ -33,5 +33,3 @@ export function NowPlaying({ handle, theme }: { handle: string; theme: { card: s
     </div>
   );
 }
-
-const t = (x: { card: string }) => x;
