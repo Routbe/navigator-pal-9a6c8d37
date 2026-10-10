@@ -11,3 +11,11 @@
 - [ ] Explore: category/platform filters, extra rows, infinite scroll
 - [ ] Translate remaining fixed Dutch dashboard labels; admin screen to approve reviews
 - [ ] Run db/65 + db/66 migrations (needs Neon)
+
+## Handoff plan (Oct 2026)
+- [x] Typecheck + full test suite (401 tests green)
+- [ ] Visual check of "Achtergrond & Visual FX" panel (needs signed-in session → Neon keys)
+- [ ] DATABASE_URL secret with `rout_app` role (needs connection string from user)
+- [ ] Settings save flow end-to-end (needs Neon keys)
+- [ ] Emoji status-dot rendering check
+- [ ] Vercel env vars confirmed (user action in Vercel)
