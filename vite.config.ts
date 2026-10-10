@@ -30,6 +30,8 @@ export default defineConfig({
         manifest: false,
         workbox: {
           globPatterns: ["**/*.{js,css,woff2,png,svg,ico}"],
+          // The studio bundle is several MB; the default 2 MB precache limit fails the build.
+          maximumFileSizeToCacheInBytes: 10 * 1024 * 1024,
           navigateFallback: "/",
           navigateFallbackDenylist: [/^\/~oauth/, /^\/api\//, /^\/_serverFn\//],
           cleanupOutdatedCaches: true,
