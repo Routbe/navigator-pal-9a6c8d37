@@ -45,8 +45,12 @@ export function normalizeGiftCode(value: string): string {
   return value.trim().toUpperCase();
 }
 
+function secureRandom(): number {
+  return (crypto.getRandomValues(new Uint32Array(1))[0] ?? 0) / 2 ** 32;
+}
+
 /** Alleen server-side gebruikt, maar hier gehouden zodat het formaat één bron heeft. */
-export function generateGiftCode(random: () => number = Math.random): string {
+export function generateGiftCode(random: () => number = secureRandom): string {
   const block = () =>
     Array.from(
       { length: 4 },

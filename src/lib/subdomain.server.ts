@@ -328,9 +328,11 @@ export async function claimRootSubdomainFor(userId: string): Promise<{
       },
       tags: ["root-subdomain-request"],
       html:
+        ((esc) =>
         `<p>Nieuwe root-subdomein aanvraag.</p>` +
-        `<ul><li>Naam: ${userName}</li><li>E-mail: ${userEmail}</li>` +
-        `<li>Subdomein: ${subdomain}</li><li>DNS: ${dnsInstruction}</li></ul>`,
+        `<ul><li>Naam: ${esc(userName)}</li><li>E-mail: ${esc(userEmail)}</li>` +
+        `<li>Subdomein: ${esc(subdomain)}</li><li>DNS: ${esc(dnsInstruction)}</li></ul>`)((v: string) =>
+          v.replace(/[&<>"']/g, (c) => `&#${c.charCodeAt(0)};`)),
     }).catch((error: unknown) => {
       console.error("[Subdomain] admin notification failed", error);
     });
