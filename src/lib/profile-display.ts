@@ -147,6 +147,8 @@ export interface ProfileDisplayPrefs {
   badgeShowcaseVisible: boolean;
   /** Openbaar profiel aan/uit. Uit = bezoekers zien geen inhoud. */
   publicProfile: boolean;
+  /** Visitors get a Pro/Social switch at the top of the profile. */
+  contextToggle: boolean;
   /** Openbare tijdlijn (mijlpalen, badges, status) tonen. */
   timelineVisible: boolean;
   badgeType: BadgeType;
@@ -240,6 +242,7 @@ export const DEFAULT_DISPLAY_PREFS: ProfileDisplayPrefs = {
   humanBadgeVisible: true,
   badgeShowcaseVisible: true,
   publicProfile: true,
+  contextToggle: false,
   timelineVisible: true,
   badgeType: "verified",
   badgeNameFormat: "full",
@@ -429,6 +432,7 @@ export function parseDisplayPrefs(raw: unknown): ProfileDisplayPrefs {
     badgeShowcaseVisible:
       r["badgeShowcaseVisible"] === undefined ? true : Boolean(r["badgeShowcaseVisible"]),
     publicProfile: r["publicProfile"] === undefined ? true : Boolean(r["publicProfile"]),
+    contextToggle: r["contextToggle"] === true,
     timelineVisible: r["timelineVisible"] === undefined ? true : Boolean(r["timelineVisible"]),
     badgeType: oneOf(r["badgeType"], ["verified", "human", "domain", "influencer", "none"] as const, "verified"),
     badgeNameFormat: oneOf(r["badgeNameFormat"], ["full", "initials", "lower"] as const, "full"),
