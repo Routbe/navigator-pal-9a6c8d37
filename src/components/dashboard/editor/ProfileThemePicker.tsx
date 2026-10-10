@@ -4,6 +4,7 @@ import { Switch } from "@/components/ui/switch";
 import { FileUploadInput } from "@/components/FileUploadInput";
 import { AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { AvatarFramePicker } from "@/components/studio/AvatarFramePicker";
+import { ProPill } from "@/components/studio/ProPill";
 import { AvatarDecorationPicker } from "@/components/studio/AvatarDecorationPicker";
 import { StatusDesignSettings } from "@/components/dashboard/editor/StatusSettings";
 import { FaviconUploader } from "@/components/studio/FaviconUploader";
@@ -127,7 +128,7 @@ export function ProfileThemePicker({
           </div>
 
           <div className="space-y-2 border-t border-border pt-4">
-            <p className="input-label">Avatarkader / rand (24 presets)</p>
+            <p className="input-label flex items-center gap-1.5">Avatarkader / rand (24 presets) <ProPill /></p>
             <AvatarFramePicker
               value={prefs.avatarFrame}
               onChange={(f) => setPref("avatarFrame", f)}
@@ -208,7 +209,7 @@ export function ProfileThemePicker({
               </button>
             ))}
           </div>
-          <p className="input-label pt-2">Typografie</p>
+          <p className="input-label flex items-center gap-1.5 pt-2">Typografie <ProPill /></p>
           <div className="flex flex-wrap gap-2">
             {TYPOGRAPHY_STYLES.map((t) => (
               <button

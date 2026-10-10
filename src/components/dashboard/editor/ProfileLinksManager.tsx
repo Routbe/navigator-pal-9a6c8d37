@@ -27,6 +27,7 @@ import {
   PROMO_COPY_PRESETS,
   type ProfileBlock,
 } from "@/lib/profile";
+import { BlockRulesPopover } from "@/components/studio/BlockRulesPopover";
 import { BookingBlockSettings } from "@/components/dashboard/BookingBlockSettings";
 import { GalleryBlockSettings } from "@/components/dashboard/GalleryBlockSettings";
 import { MediaEmbedBlockSettings } from "@/components/dashboard/MediaEmbedBlockSettings";
@@ -244,6 +245,7 @@ export function ProfileLinksManager({
                 >
                   <Pin className="h-4 w-4" />
                 </button>
+                <BlockRulesPopover block={b} onChange={(next) => patch(b.id, next)} />
                 <Switch
                   checked={!b.hidden}
                   onCheckedChange={(on) => patch(b.id, { hidden: !on })}
