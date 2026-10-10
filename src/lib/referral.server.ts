@@ -46,6 +46,17 @@ export async function claimReferralForUser(
   if (!inviterId) return { ok: false, reason: "unknown_handle" };
   if (inviterId === inviteeId) return { ok: false, reason: "self_referral" };
 
+  // Only a brand-new account (< 24h) with a confirmed email can name an inviter.
+  const fresh = (await sql`
+    select 1 from public.users u
+     where u.id = ${inviteeId}
+       and u.created_at > now() - interval '24 hours'
+       and (u.email_confirmed_at is not null
+            or exists (select 1 from neon_auth."user" n where n.id::text = u.id::text and n."emailVerified" = true))
+     limit 1
+  `.catch(() => [])) as Row[];
+  if (fresh.length === 0) return { ok: false, reason: "not_eligible" };
+
   const existing = (await sql`
     select 1 from public.referrals where invitee_id = ${inviteeId} limit 1
   `) as Row[];

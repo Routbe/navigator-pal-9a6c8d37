@@ -76,6 +76,14 @@ export const sendTestEmail = createServerFn({ method: "POST" })
     const { assertAdminRole } = await import("./admin.server");
     await assertAdminRole(context.userId);
 
+    // Test mails only go to the signed-in admin's own address.
+    const { sql } = await import("@/lib/neon");
+    const own = (await sql`select email from public.users where id = ${context.userId} limit 1`) as { email: string | null }[];
+    const ownEmail = own[0]?.email?.trim().toLowerCase();
+    if (!ownEmail || ownEmail !== data.email.trim().toLowerCase()) {
+      return { success: false as const, error: "Testmails gaan alleen naar je eigen e-mailadres." };
+    }
+
     // In-memory sliding window, per admin: 5 test mails per 10 minutes. Good
     // enough to stop an accidental loop from the preview page — not a
     // security boundary, see rate-limit.server.ts.
