@@ -10,6 +10,7 @@ import { styledProfilePath, type UrlStyle } from "@/lib/profile-url";
 import { AVATAR_SHAPES, type AvatarShape, type ProfileDisplayPrefs } from "@/lib/profile-display";
 import { type ProfileBlock } from "@/lib/profile";
 import { cn } from "@/lib/utils";
+import { VerifiedModal } from "./VerifiedModal";
 
 /** Tekens die de studio hard afdwingt (de server knipt ook nog eens af). */
 export const MAX_DISPLAY_NAME = 50;
@@ -89,6 +90,7 @@ export function ProfileBasicInfoAccordion({
   savedAt = null,
 }: Props) {
   const [emojiOpen, setEmojiOpen] = useState(false);
+  const [verifyOpen, setVerifyOpen] = useState(false);
   const [avatarSource, setAvatarSource] = useState("");
   const [fetching, setFetching] = useState(false);
 
@@ -299,6 +301,14 @@ export function ProfileBasicInfoAccordion({
             >
               Handle wijzigen
             </button>
+            <button
+              type="button"
+              onClick={() => setVerifyOpen(true)}
+              className="shrink-0 rounded-lg border border-primary/40 bg-primary/10 px-2 py-1 text-[11px] font-medium text-primary hover:bg-primary/15"
+            >
+              Vraag Verificatie aan
+            </button>
+            <VerifiedModal open={verifyOpen} onClose={() => setVerifyOpen(false)} />
             <button
               type="button"
               onClick={() => {

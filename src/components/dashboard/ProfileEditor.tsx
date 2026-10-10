@@ -89,7 +89,8 @@ import {
   type ProfileBlock,
   type ProfileRecord,
 } from "@/lib/profile";
-import { ConversionCoachAccordion } from "@/components/studio/ConversionCoachAccordion";
+import { ConversionCoachFab } from "@/components/studio/ConversionCoachFab";
+import { ShareInspector } from "@/components/studio/ShareInspector";
 import {
   Accordion,
   AccordionContent,
@@ -936,7 +937,7 @@ export function ProfileEditor({ variant = "verified" }: { variant?: ProfileVaria
                 onOpenBlockChange={setOpenBlock}
                 onOpenAddDrawer={() => setDrawer(true)}
                 onQuickCreate={quickCreate}
-                onAddKind={(kind) => addBlock(kind)}
+                onAddKind={(kind, value) => addBlock(kind, value)}
               >
 
                   <SocialVerifyPanel handle={normalized || handle} />
@@ -949,6 +950,47 @@ export function ProfileEditor({ variant = "verified" }: { variant?: ProfileVaria
                     <TotalReachButton />
                   </section>
 
+                {/* 🏅 Badges: eigen map binnen Links & componenten, met schakelaar. */}
+                <section className="space-y-3 rounded-2xl border border-border bg-card p-4 sm:p-5">
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="min-w-0">
+                      <h2 className="text-lg font-medium">🏅 ROUT Badges</h2>
+                      <p className="mt-1 text-sm text-muted-foreground">
+                        Je badges verschijnen automatisch onder je profielkop. Zet ze hier uit als
+                        je liever een kale pagina hebt.
+                      </p>
+                    </div>
+                    <Switch
+                      aria-label="Badges tonen op je profiel"
+                      checked={prefs.badgeShowcaseVisible}
+                      onCheckedChange={(v) => setPref("badgeShowcaseVisible", v)}
+                    />
+                  </div>
+                  <BadgesPanel />
+                  <BadgeActivityPanel />
+                </section>
+              </ProfileContentAccordion>
+
+              {/* Favorieten horen bij je links: film, serie, boek, muziek … */}
+              <ProfileFavoritesAccordion
+                favorites={prefs.favorites}
+                onFavoritesChange={(next) => setPref("favorites", next)}
+                layout={prefs.favoritesLayout}
+                onLayoutChange={(next) => setPref("favoritesLayout", next)}
+              />
+
+              {/* ⚙️ Geavanceerde Instellingen: alles wat geen pagina-inhoud is. */}
+              <p className="px-1 pt-4 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                ⚙️ Geavanceerde Instellingen
+              </p>
+              <AccordionItem
+                value="advanced_settings"
+                className="rounded-2xl border border-border bg-card px-4 sm:px-5"
+              >
+                <AccordionTrigger className="hover:no-underline">
+                  <span className="text-base font-medium">QR, privacy &amp; delen</span>
+                </AccordionTrigger>
+                <AccordionContent className="space-y-4 pb-5">
                   {/* Eén bron van waarheid: QR-styling gebeurt in de generator. */}
                   <section className="space-y-3 rounded-2xl border border-border bg-card p-4 sm:p-5">
                     <h2 className="text-lg font-medium">Profiel-QR</h2>
@@ -997,36 +1039,21 @@ export function ProfileEditor({ variant = "verified" }: { variant?: ProfileVaria
                   </div>
                 </section>
 
-                {/* 🏅 Badges: eigen map binnen Links & componenten, met schakelaar. */}
-                <section className="space-y-3 rounded-2xl border border-border bg-card p-4 sm:p-5">
-                  <div className="flex items-start justify-between gap-4">
-                    <div className="min-w-0">
-                      <h2 className="text-lg font-medium">🏅 ROUT Badges</h2>
-                      <p className="mt-1 text-sm text-muted-foreground">
-                        Je badges verschijnen automatisch onder je profielkop. Zet ze hier uit als
-                        je liever een kale pagina hebt.
-                      </p>
-                    </div>
-                    <Switch
-                      aria-label="Badges tonen op je profiel"
-                      checked={prefs.badgeShowcaseVisible}
-                      onCheckedChange={(v) => setPref("badgeShowcaseVisible", v)}
+                  <section className="space-y-3 rounded-2xl border border-border bg-card p-4 sm:p-5">
+                    <h2 className="text-lg font-medium">Social share inspecteur</h2>
+                    <ShareInspector
+                      prefs={prefs}
+                      onPrefChange={setPref}
+                      displayName={displayName}
+                      bio={tagline}
                     />
-                  </div>
-                  <BadgesPanel />
-                  <BadgeActivityPanel />
-                </section>
-              </ProfileContentAccordion>
-
-              {/* Favorieten horen bij je links: film, serie, boek, muziek … */}
-              <ProfileFavoritesAccordion
-                favorites={prefs.favorites}
-                onFavoritesChange={(next) => setPref("favorites", next)}
-                layout={prefs.favoritesLayout}
-                onLayoutChange={(next) => setPref("favoritesLayout", next)}
-              />
-
-              <ConversionCoachAccordion
+                  </section>
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+          )}
+          {tab === "links" && (
+              <ConversionCoachFab
                 blocks={blocks}
                 avatarUrl={avatarUrl}
                 bio={tagline}
@@ -1035,7 +1062,6 @@ export function ProfileEditor({ variant = "verified" }: { variant?: ProfileVaria
                 onPrefChange={setPref}
                 onAddKind={(kind) => addBlock(kind)}
               />
-            </Accordion>
           )}
 
           {tab === "design" && (

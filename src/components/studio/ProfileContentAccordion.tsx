@@ -14,7 +14,7 @@ interface Props {
   onOpenAddDrawer: () => void;
   onQuickCreate: (kind: QuickCreateOption["kind"]) => void;
   /** Voegt een blok van dit type toe en opent het meteen. */
-  onAddKind: (kind: string) => void;
+  onAddKind: (kind: string, value?: string) => void;
   /** Extra secties (referrals, QR, badges …) onder de linklijst. */
   children?: ReactNode;
 }

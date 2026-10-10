@@ -1,6 +1,4 @@
 import { AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { ConversionCoach } from "@/components/dashboard/ConversionCoach";
 import { auditProfile, hasPrimaryAction, type ConversionFix } from "@/lib/conversion-coach";
 import type { ProfileBlock } from "@/lib/profile";
@@ -162,55 +160,6 @@ export function ConversionCoachAccordion({
                 {effect.label}
               </button>
             ))}
-          </div>
-        </section>
-
-        <section className="space-y-2">
-          <p className="text-xs font-medium">Social share inspecteur</p>
-          <Input
-            id="coach-meta-title"
-            value={prefs.metaTitle ?? ""}
-            maxLength={70}
-            placeholder="Meta titel"
-            aria-label="Meta titel"
-            onChange={(e) => onPrefChange("metaTitle", e.target.value || null)}
-            className="h-9 text-xs"
-          />
-          <Textarea
-            value={prefs.metaDescription ?? ""}
-            maxLength={200}
-            placeholder="Meta omschrijving"
-            aria-label="Meta omschrijving"
-            onChange={(e) => onPrefChange("metaDescription", e.target.value || null)}
-            className="min-h-16 text-xs"
-          />
-          <Input
-            value={prefs.ogImageUrl ?? ""}
-            placeholder="OpenGraph afbeelding (https://…)"
-            aria-label="OpenGraph afbeelding"
-            spellCheck={false}
-            onChange={(e) => onPrefChange("ogImageUrl", e.target.value || null)}
-            className="h-9 text-xs"
-          />
-          <div className="overflow-hidden rounded-xl border border-border">
-            <div className="aspect-[1.91/1] w-full bg-muted">
-              {prefs.ogImageUrl ? (
-                <img
-                  src={prefs.ogImageUrl}
-                  alt=""
-                  className="h-full w-full object-cover"
-                  loading="lazy"
-                />
-              ) : null}
-            </div>
-            <div className="space-y-0.5 p-2">
-              <p className="truncate text-xs font-medium">
-                {prefs.metaTitle || displayName || "Jouw profiel"}
-              </p>
-              <p className="line-clamp-2 text-[11px] text-muted-foreground">
-                {prefs.metaDescription || bio || "Voeg een omschrijving toe voor WhatsApp en LinkedIn."}
-              </p>
-            </div>
           </div>
         </section>
 
