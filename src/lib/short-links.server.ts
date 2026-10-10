@@ -219,6 +219,7 @@ export async function manageByToken(
 
   if (action === "set_target") {
     if (!opts.targetUrl || opts.targetUrl.length < 3) throw new Error("Invalid target url");
+    if ((await import("./short-link-target")).shortLinkTargetBlocked(opts.targetUrl)) throw new Error("blocked_target");
     await sql`update public.tracked_qrs set target_url = ${opts.targetUrl}, updated_at = now() where id = ${id}`;
   } else if (action === "set_active") {
     await sql`update public.tracked_qrs set is_active = ${opts.isActive ?? true}, updated_at = now() where id = ${id}`;
@@ -247,6 +248,8 @@ export async function updateTrackedQrTarget(
   id: string,
   targetUrl: string,
 ): Promise<{ id: string; slug: string; target_url: string; updated_at: string }> {
+  const { shortLinkTargetBlocked } = await import("./short-link-target");
+  if (shortLinkTargetBlocked(targetUrl)) throw new Error("blocked_target");
   const rows = (await sql`
     update public.tracked_qrs
        set target_url = ${targetUrl}, updated_at = now()

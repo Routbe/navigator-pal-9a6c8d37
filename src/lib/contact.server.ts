@@ -73,15 +73,15 @@ export async function sendVisitorAutoReply(payload: ContactPayload): Promise<voi
   const { sendMail } = await import("@/emails/send.server");
   const { sent, error } = await sendMail({
     to: payload.email,
-    subject: `ROUT — ${payload.subject}`,
+    subject: "ROUT — we hebben je bericht ontvangen",
     category: "form",
     language: payload.locale,
     replyTo: { email: CONTACT_RECIPIENT, name: "ROUT" },
-    params: { NAME: payload.name, MESSAGE: payload.message, SUBJECT: payload.subject },
+    // The visitor's own text is never echoed: the recipient address is unverified.
+    params: { NAME: "", MESSAGE: "", SUBJECT: "" },
     html:
-      `<p>${escape(payload.name)},</p>` +
-      `<p>Bedankt voor je bericht. We komen er zo snel mogelijk op terug.</p>` +
-      `<blockquote>${escape(payload.message)}</blockquote><p>— ROUT</p>`,
+      `<p>Hallo,</p>` +
+      `<p>Bedankt voor je bericht. We komen er zo snel mogelijk op terug.</p><p>— ROUT</p>`,
     tags: ["contact-form-autoreply"],
   });
   if (!sent) throw new Error(error ?? "Brevo refused the visitor confirmation");

@@ -16,9 +16,8 @@ interface PromoDefinition {
   label?: string;
 }
 
-const DEFAULT_CODES: Record<string, PromoDefinition> = {
-  EARLYBELIEVER: { percentOff: 100, label: "100% korting" },
-};
+// No built-in codes: EARLYBELIEVER lives in promo_codes with a redemption cap (db/69).
+const DEFAULT_CODES: Record<string, PromoDefinition> = {};
 
 function envTable(): Record<string, PromoDefinition> {
   const raw = process.env["PROMO_CODES"];

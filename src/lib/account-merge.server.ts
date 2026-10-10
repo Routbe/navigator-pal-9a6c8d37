@@ -60,6 +60,20 @@ export async function createMergeTicket(primaryUserId: string) {
   };
 }
 
+async function countMergeFailures(userId: string): Promise<number> {
+  try {
+    const { sha256Hex } = await import("./rate-limit-db.server");
+    const bucket = `merge-redeem-fail:${await sha256Hex(userId)}`;
+    const rows = (await sql`
+      select coalesce(sum(hits), 0)::int as hits from public.rate_limits
+       where bucket = ${bucket} and window_start > now() - make_interval(mins => ${TICKET_TTL_MINUTES * 2})
+    `) as Row[];
+    return Number(rows[0]?.["hits"] ?? 0);
+  } catch {
+    return 0;
+  }
+}
+
 async function findTicket(pin: string | null, token: string | null) {
   const hash = await hashToken((pin ?? token ?? "").trim());
   const rows = (await sql`
@@ -133,7 +147,12 @@ export async function redeemMergeTicket(input: {
   pin?: string | null;
   token?: string | null;
 }) {
+  // At most 5 wrong codes per account per ticket lifetime; then the user must wait.
+  const { hitRateLimit } = await import("./rate-limit-db.server");
+  const failures = await countMergeFailures(input.secondaryUserId);
+  if (failures >= 5) return { ok: false as const, reason: "invalid_or_expired" as const };
   const ticket = await findTicket(input.pin ?? null, input.token ?? null);
+  if (!ticket) await hitRateLimit("merge-redeem-fail", input.secondaryUserId, { limit: 5, windowSec: TICKET_TTL_MINUTES * 60 });
   if (!ticket) return { ok: false as const, reason: "invalid_or_expired" as const };
 
   const primaryId = ticket["primary_user_id"] as string;
