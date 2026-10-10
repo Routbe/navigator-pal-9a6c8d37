@@ -132,7 +132,8 @@ import { EmailAliasDomains } from "@/components/dashboard/EmailAliasDomains";
 import { withAuthTimeout, authFailureMessage } from "@/lib/auth-timeout";
 import { oauthAvatarOf } from "@/lib/oauth-avatar";
 import { BlueskyWizard } from "@/components/dashboard/BlueskyWizard";
-import { StatusContentSettings } from "@/components/dashboard/editor/StatusSettings";
+import { LiveStatusAccordion } from "@/components/studio/LiveStatusAccordion";
+import { IntegrationsAccordion } from "@/components/studio/IntegrationsAccordion";
 
 export type ProfileVariant = "verified" | "alias";
 
@@ -924,6 +925,10 @@ export function ProfileEditor({ variant = "verified" }: { variant?: ProfileVaria
                 savedAt={savedAt}
               />
 
+              <LiveStatusAccordion prefs={prefs} setPref={setPref} />
+
+              <IntegrationsAccordion />
+
               <ProfileContentAccordion
                 blocks={blocks}
                 onBlocksChange={setBlocks}
@@ -991,8 +996,6 @@ export function ProfileEditor({ variant = "verified" }: { variant?: ProfileVaria
                     />
                   </div>
                 </section>
-
-                <StatusContentSettings prefs={prefs} setPref={setPref} />
 
                 {/* 🏅 Badges: eigen map binnen Links & componenten, met schakelaar. */}
                 <section className="space-y-3 rounded-2xl border border-border bg-card p-4 sm:p-5">

@@ -14,8 +14,10 @@
 
 ## Handoff plan (Oct 2026)
 - [x] Typecheck + full test suite (401 tests green)
-- [ ] Visual check of "Achtergrond & Visual FX" panel (needs signed-in session → Neon keys)
+- [x] Visual check of "Achtergrond & Visual FX" panel
 - [ ] DATABASE_URL secret with `rout_app` role (still owner role; needs rout_app connection string from user)
 - [x] Settings save flow end-to-end (fixed: database keys were missing; saving verified)
-- [ ] Emoji status-dot rendering check
+- [x] Emoji check (sandbox has no emoji font; emoji font fallback added)
 - [ ] Vercel env vars confirmed (user action in Vercel)
+- [x] Live Status & Gedachten + Verbindingen & Integraties sections, Spotify Now Playing
+- [ ] Spotify keys (SPOTIFY_CLIENT_ID/SECRET, PSP_ENCRYPTION_KEY) from user

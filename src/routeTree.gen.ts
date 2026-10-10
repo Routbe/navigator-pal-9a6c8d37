@@ -89,12 +89,14 @@ import { Route as AuthenticatedDashboardProfileRouteImport } from './routes/_aut
 import { Route as AuthenticatedDashboardRoutesRouteImport } from './routes/_authenticated/dashboard.routes'
 import { Route as ApiAuthSplatRouteImport } from './routes/api_.auth.$'
 import { Route as ApiBunqCheckStatusRouteImport } from './routes/api_.bunq.check-status'
+import { Route as ApiPresenceNowPlayingRouteImport } from './routes/api_.presence.now-playing'
 import { Route as ApiProfilesCheckHandleRouteImport } from './routes/api_.profiles.check-handle'
 import { Route as ApiPublicAvatarRouteImport } from './routes/api_.public.avatar'
 import { Route as ApiPublicBrandLogoRouteImport } from './routes/api_.public.brand-logo'
 import { Route as ApiPublicGalleryMediaRouteImport } from './routes/api_.public.gallery-media'
 import { Route as ApiPublicHealthRouteImport } from './routes/api_.public.health'
 import { Route as ApiPublicStripeWebhookRouteImport } from './routes/api_.public.stripe-webhook'
+import { Route as ApiSpotifyStartRouteImport } from './routes/api_.spotify.start'
 import { Route as AuthMastodonCallbackRouteImport } from './routes/auth_.mastodon.callback'
 import { Route as RUAliasRouteImport } from './routes/r.u.$alias'
 import { Route as UUsernameSlugRouteImport } from './routes/u.$username.$slug'
@@ -122,6 +124,7 @@ import { Route as ApiPublicOauthUserinfoRouteImport } from './routes/api_.public
 import { Route as ApiPublicOgHandleRouteImport } from './routes/api_.public.og.$handle'
 import { Route as ApiPublicQrUploadRouteImport } from './routes/api_.public.qr.upload'
 import { Route as ApiPublicSessionLogoutRouteImport } from './routes/api_.public.session.logout'
+import { Route as ApiPublicSpotifyCallbackRouteImport } from './routes/api_.public.spotify.callback'
 import { Route as ApiPublicWebhooksBankingRouteImport } from './routes/api_.public.webhooks.banking'
 import { Route as AuthenticatedConsoleAppsAppIdIndexRouteImport } from './routes/_authenticated/console.apps.$appId.index'
 import { Route as AuthenticatedConsoleAppsAppIdAdvancedRouteImport } from './routes/_authenticated/console.apps.$appId.advanced'
@@ -552,6 +555,11 @@ const ApiBunqCheckStatusRoute = ApiBunqCheckStatusRouteImport.update({
   path: '/api/bunq/check-status',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPresenceNowPlayingRoute = ApiPresenceNowPlayingRouteImport.update({
+  id: '/api_/presence/now-playing',
+  path: '/api/presence/now-playing',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiProfilesCheckHandleRoute = ApiProfilesCheckHandleRouteImport.update({
   id: '/api_/profiles/check-handle',
   path: '/api/profiles/check-handle',
@@ -580,6 +588,11 @@ const ApiPublicHealthRoute = ApiPublicHealthRouteImport.update({
 const ApiPublicStripeWebhookRoute = ApiPublicStripeWebhookRouteImport.update({
   id: '/api_/public/stripe-webhook',
   path: '/api/public/stripe-webhook',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiSpotifyStartRoute = ApiSpotifyStartRouteImport.update({
+  id: '/api_/spotify/start',
+  path: '/api/spotify/start',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthMastodonCallbackRoute = AuthMastodonCallbackRouteImport.update({
@@ -729,6 +742,12 @@ const ApiPublicSessionLogoutRoute = ApiPublicSessionLogoutRouteImport.update({
   path: '/api/public/session/logout',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicSpotifyCallbackRoute =
+  ApiPublicSpotifyCallbackRouteImport.update({
+    id: '/api_/public/spotify/callback',
+    path: '/api/public/spotify/callback',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ApiPublicWebhooksBankingRoute =
   ApiPublicWebhooksBankingRouteImport.update({
     id: '/api_/public/webhooks/banking',
@@ -899,12 +918,14 @@ export interface FileRoutesByFullPath {
   '/dashboard/routes': typeof AuthenticatedDashboardRoutesRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/bunq/check-status': typeof ApiBunqCheckStatusRoute
+  '/api/presence/now-playing': typeof ApiPresenceNowPlayingRoute
   '/api/profiles/check-handle': typeof ApiProfilesCheckHandleRoute
   '/api/public/avatar': typeof ApiPublicAvatarRoute
   '/api/public/brand-logo': typeof ApiPublicBrandLogoRoute
   '/api/public/gallery-media': typeof ApiPublicGalleryMediaRoute
   '/api/public/health': typeof ApiPublicHealthRoute
   '/api/public/stripe-webhook': typeof ApiPublicStripeWebhookRoute
+  '/api/spotify/start': typeof ApiSpotifyStartRoute
   '/auth/mastodon/callback': typeof AuthMastodonCallbackRoute
   '/r/u/$alias': typeof RUAliasRoute
   '/u/$username/$slug': typeof UUsernameSlugRoute
@@ -932,6 +953,7 @@ export interface FileRoutesByFullPath {
   '/api/public/og/$handle': typeof ApiPublicOgHandleRoute
   '/api/public/qr/upload': typeof ApiPublicQrUploadRoute
   '/api/public/session/logout': typeof ApiPublicSessionLogoutRoute
+  '/api/public/spotify/callback': typeof ApiPublicSpotifyCallbackRoute
   '/api/public/webhooks/banking': typeof ApiPublicWebhooksBankingRoute
   '/console/apps/': typeof AuthenticatedConsoleAppsIndexRoute
   '/console/apps/$appId/advanced': typeof AuthenticatedConsoleAppsAppIdAdvancedRoute
@@ -1025,12 +1047,14 @@ export interface FileRoutesByTo {
   '/dashboard/routes': typeof AuthenticatedDashboardRoutesRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/bunq/check-status': typeof ApiBunqCheckStatusRoute
+  '/api/presence/now-playing': typeof ApiPresenceNowPlayingRoute
   '/api/profiles/check-handle': typeof ApiProfilesCheckHandleRoute
   '/api/public/avatar': typeof ApiPublicAvatarRoute
   '/api/public/brand-logo': typeof ApiPublicBrandLogoRoute
   '/api/public/gallery-media': typeof ApiPublicGalleryMediaRoute
   '/api/public/health': typeof ApiPublicHealthRoute
   '/api/public/stripe-webhook': typeof ApiPublicStripeWebhookRoute
+  '/api/spotify/start': typeof ApiSpotifyStartRoute
   '/auth/mastodon/callback': typeof AuthMastodonCallbackRoute
   '/r/u/$alias': typeof RUAliasRoute
   '/u/$username/$slug': typeof UUsernameSlugRoute
@@ -1057,6 +1081,7 @@ export interface FileRoutesByTo {
   '/api/public/og/$handle': typeof ApiPublicOgHandleRoute
   '/api/public/qr/upload': typeof ApiPublicQrUploadRoute
   '/api/public/session/logout': typeof ApiPublicSessionLogoutRoute
+  '/api/public/spotify/callback': typeof ApiPublicSpotifyCallbackRoute
   '/api/public/webhooks/banking': typeof ApiPublicWebhooksBankingRoute
   '/console/apps': typeof AuthenticatedConsoleAppsIndexRoute
   '/console/apps/$appId/advanced': typeof AuthenticatedConsoleAppsAppIdAdvancedRoute
@@ -1155,12 +1180,14 @@ export interface FileRoutesById {
   '/_authenticated/dashboard/routes': typeof AuthenticatedDashboardRoutesRoute
   '/api_/auth/$': typeof ApiAuthSplatRoute
   '/api_/bunq/check-status': typeof ApiBunqCheckStatusRoute
+  '/api_/presence/now-playing': typeof ApiPresenceNowPlayingRoute
   '/api_/profiles/check-handle': typeof ApiProfilesCheckHandleRoute
   '/api_/public/avatar': typeof ApiPublicAvatarRoute
   '/api_/public/brand-logo': typeof ApiPublicBrandLogoRoute
   '/api_/public/gallery-media': typeof ApiPublicGalleryMediaRoute
   '/api_/public/health': typeof ApiPublicHealthRoute
   '/api_/public/stripe-webhook': typeof ApiPublicStripeWebhookRoute
+  '/api_/spotify/start': typeof ApiSpotifyStartRoute
   '/auth_/mastodon/callback': typeof AuthMastodonCallbackRoute
   '/r/u/$alias': typeof RUAliasRoute
   '/u/$username/$slug': typeof UUsernameSlugRoute
@@ -1188,6 +1215,7 @@ export interface FileRoutesById {
   '/api_/public/og/$handle': typeof ApiPublicOgHandleRoute
   '/api_/public/qr/upload': typeof ApiPublicQrUploadRoute
   '/api_/public/session/logout': typeof ApiPublicSessionLogoutRoute
+  '/api_/public/spotify/callback': typeof ApiPublicSpotifyCallbackRoute
   '/api_/public/webhooks/banking': typeof ApiPublicWebhooksBankingRoute
   '/_authenticated/console/apps/': typeof AuthenticatedConsoleAppsIndexRoute
   '/_authenticated/console/apps/$appId/advanced': typeof AuthenticatedConsoleAppsAppIdAdvancedRoute
@@ -1286,12 +1314,14 @@ export interface FileRouteTypes {
     | '/dashboard/routes'
     | '/api/auth/$'
     | '/api/bunq/check-status'
+    | '/api/presence/now-playing'
     | '/api/profiles/check-handle'
     | '/api/public/avatar'
     | '/api/public/brand-logo'
     | '/api/public/gallery-media'
     | '/api/public/health'
     | '/api/public/stripe-webhook'
+    | '/api/spotify/start'
     | '/auth/mastodon/callback'
     | '/r/u/$alias'
     | '/u/$username/$slug'
@@ -1319,6 +1349,7 @@ export interface FileRouteTypes {
     | '/api/public/og/$handle'
     | '/api/public/qr/upload'
     | '/api/public/session/logout'
+    | '/api/public/spotify/callback'
     | '/api/public/webhooks/banking'
     | '/console/apps/'
     | '/console/apps/$appId/advanced'
@@ -1412,12 +1443,14 @@ export interface FileRouteTypes {
     | '/dashboard/routes'
     | '/api/auth/$'
     | '/api/bunq/check-status'
+    | '/api/presence/now-playing'
     | '/api/profiles/check-handle'
     | '/api/public/avatar'
     | '/api/public/brand-logo'
     | '/api/public/gallery-media'
     | '/api/public/health'
     | '/api/public/stripe-webhook'
+    | '/api/spotify/start'
     | '/auth/mastodon/callback'
     | '/r/u/$alias'
     | '/u/$username/$slug'
@@ -1444,6 +1477,7 @@ export interface FileRouteTypes {
     | '/api/public/og/$handle'
     | '/api/public/qr/upload'
     | '/api/public/session/logout'
+    | '/api/public/spotify/callback'
     | '/api/public/webhooks/banking'
     | '/console/apps'
     | '/console/apps/$appId/advanced'
@@ -1541,12 +1575,14 @@ export interface FileRouteTypes {
     | '/_authenticated/dashboard/routes'
     | '/api_/auth/$'
     | '/api_/bunq/check-status'
+    | '/api_/presence/now-playing'
     | '/api_/profiles/check-handle'
     | '/api_/public/avatar'
     | '/api_/public/brand-logo'
     | '/api_/public/gallery-media'
     | '/api_/public/health'
     | '/api_/public/stripe-webhook'
+    | '/api_/spotify/start'
     | '/auth_/mastodon/callback'
     | '/r/u/$alias'
     | '/u/$username/$slug'
@@ -1574,6 +1610,7 @@ export interface FileRouteTypes {
     | '/api_/public/og/$handle'
     | '/api_/public/qr/upload'
     | '/api_/public/session/logout'
+    | '/api_/public/spotify/callback'
     | '/api_/public/webhooks/banking'
     | '/_authenticated/console/apps/'
     | '/_authenticated/console/apps/$appId/advanced'
@@ -1643,12 +1680,14 @@ export interface RootRouteChildren {
   UUsernameRoute: typeof UUsernameRouteWithChildren
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
   ApiBunqCheckStatusRoute: typeof ApiBunqCheckStatusRoute
+  ApiPresenceNowPlayingRoute: typeof ApiPresenceNowPlayingRoute
   ApiProfilesCheckHandleRoute: typeof ApiProfilesCheckHandleRoute
   ApiPublicAvatarRoute: typeof ApiPublicAvatarRoute
   ApiPublicBrandLogoRoute: typeof ApiPublicBrandLogoRoute
   ApiPublicGalleryMediaRoute: typeof ApiPublicGalleryMediaRoute
   ApiPublicHealthRoute: typeof ApiPublicHealthRoute
   ApiPublicStripeWebhookRoute: typeof ApiPublicStripeWebhookRoute
+  ApiSpotifyStartRoute: typeof ApiSpotifyStartRoute
   AuthMastodonCallbackRoute: typeof AuthMastodonCallbackRoute
   RUAliasRoute: typeof RUAliasRoute
   ApiPublicAuthProvidersRoute: typeof ApiPublicAuthProvidersRoute
@@ -1670,6 +1709,7 @@ export interface RootRouteChildren {
   ApiPublicOgHandleRoute: typeof ApiPublicOgHandleRoute
   ApiPublicQrUploadRoute: typeof ApiPublicQrUploadRoute
   ApiPublicSessionLogoutRoute: typeof ApiPublicSessionLogoutRoute
+  ApiPublicSpotifyCallbackRoute: typeof ApiPublicSpotifyCallbackRoute
   ApiPublicWebhooksBankingRoute: typeof ApiPublicWebhooksBankingRoute
   ApiPublicBookingsIdActionRoute: typeof ApiPublicBookingsIdActionRoute
 }
@@ -2236,6 +2276,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiBunqCheckStatusRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api_/presence/now-playing': {
+      id: '/api_/presence/now-playing'
+      path: '/api/presence/now-playing'
+      fullPath: '/api/presence/now-playing'
+      preLoaderRoute: typeof ApiPresenceNowPlayingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api_/profiles/check-handle': {
       id: '/api_/profiles/check-handle'
       path: '/api/profiles/check-handle'
@@ -2276,6 +2323,13 @@ declare module '@tanstack/react-router' {
       path: '/api/public/stripe-webhook'
       fullPath: '/api/public/stripe-webhook'
       preLoaderRoute: typeof ApiPublicStripeWebhookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api_/spotify/start': {
+      id: '/api_/spotify/start'
+      path: '/api/spotify/start'
+      fullPath: '/api/spotify/start'
+      preLoaderRoute: typeof ApiSpotifyStartRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/auth_/mastodon/callback': {
@@ -2465,6 +2519,13 @@ declare module '@tanstack/react-router' {
       path: '/api/public/session/logout'
       fullPath: '/api/public/session/logout'
       preLoaderRoute: typeof ApiPublicSessionLogoutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api_/public/spotify/callback': {
+      id: '/api_/public/spotify/callback'
+      path: '/api/public/spotify/callback'
+      fullPath: '/api/public/spotify/callback'
+      preLoaderRoute: typeof ApiPublicSpotifyCallbackRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api_/public/webhooks/banking': {
@@ -2838,12 +2899,14 @@ const rootRouteChildren: RootRouteChildren = {
   UUsernameRoute: UUsernameRouteWithChildren,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
   ApiBunqCheckStatusRoute: ApiBunqCheckStatusRoute,
+  ApiPresenceNowPlayingRoute: ApiPresenceNowPlayingRoute,
   ApiProfilesCheckHandleRoute: ApiProfilesCheckHandleRoute,
   ApiPublicAvatarRoute: ApiPublicAvatarRoute,
   ApiPublicBrandLogoRoute: ApiPublicBrandLogoRoute,
   ApiPublicGalleryMediaRoute: ApiPublicGalleryMediaRoute,
   ApiPublicHealthRoute: ApiPublicHealthRoute,
   ApiPublicStripeWebhookRoute: ApiPublicStripeWebhookRoute,
+  ApiSpotifyStartRoute: ApiSpotifyStartRoute,
   AuthMastodonCallbackRoute: AuthMastodonCallbackRoute,
   RUAliasRoute: RUAliasRoute,
   ApiPublicAuthProvidersRoute: ApiPublicAuthProvidersRoute,
@@ -2866,6 +2929,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiPublicOgHandleRoute: ApiPublicOgHandleRoute,
   ApiPublicQrUploadRoute: ApiPublicQrUploadRoute,
   ApiPublicSessionLogoutRoute: ApiPublicSessionLogoutRoute,
+  ApiPublicSpotifyCallbackRoute: ApiPublicSpotifyCallbackRoute,
   ApiPublicWebhooksBankingRoute: ApiPublicWebhooksBankingRoute,
   ApiPublicBookingsIdActionRoute: ApiPublicBookingsIdActionRoute,
 }

@@ -12,10 +12,10 @@ const pill = (on: boolean) =>
   cn("h-9 shrink-0 rounded-full border px-3 text-[11px] font-medium transition-colors", on ? "border-primary/50 bg-primary/10" : "border-border");
 
 /** Links tab: what the status says (dot state + short text). */
-export function StatusContentSettings({ prefs, setPref }: { prefs: ProfileDisplayPrefs; setPref: SetPref }) {
+export function StatusContentSettings({ prefs, setPref, bare = false }: { prefs: ProfileDisplayPrefs; setPref: SetPref; bare?: boolean }) {
   return (
-    <section className="space-y-4 rounded-2xl border border-border bg-card p-4 sm:p-5">
-      <div>
+    <section className={bare ? "space-y-4" : "space-y-4 rounded-2xl border border-border bg-card p-4 sm:p-5"}>
+      <div className={bare ? "hidden" : undefined}>
         <h2 className="text-lg font-medium">💬 Status</h2>
         <p className="mt-1 text-sm text-muted-foreground">Je statusbolletje en een korte tekst die als ballonnetje bij je avatar zweeft. Het uiterlijk kies je in Design &amp; styling.</p>
       </div>
@@ -32,7 +32,7 @@ export function StatusContentSettings({ prefs, setPref }: { prefs: ProfileDispla
       </div>
       <div className="space-y-1.5">
         <p className="input-label">Statuslijn</p>
-        <Input value={prefs.statusLine ?? ""} maxLength={60} onChange={(e) => setPref("statusLine", e.target.value || null)} placeholder="Beschikbaar voor werk" className="h-10 text-xs" />
+        <Input value={prefs.statusLine ?? ""} maxLength={60} onChange={(e) => setPref("statusLine", e.target.value || null)} placeholder="Wat ben je aan het doen? (Max 60 tekens)" className="h-10 text-xs" />
         <p className="text-xs text-muted-foreground">{(prefs.statusLine ?? "").length}/60 tekens · leeg = geen ballon.</p>
       </div>
     </section>

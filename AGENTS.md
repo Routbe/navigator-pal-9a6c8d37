@@ -32,8 +32,6 @@
 
 - Page share images are drawn in code (`src/lib/page-og.server.ts`) from the single logo source `src/lib/brand/logo.ts`, one per page per locale at `/brand/og/<page>-<locale>.png`, cached in the internal bucket under a version prefix; never AI-generated, never rotated. Why: brand fidelity and crawler-cache stability.
 - Bot checks run only through the self-hosted ALTCHA proof-of-work (`altcha.server.ts`, single-use via `altcha_used` db/54); `api_/auth/$.ts` refuses email sign-up/sign-in/magic-link/password-reset with `altcha_invalid` (400) before Better Auth runs. Why: no third-party bot service and no tracking.
-- Studio autosaves private drafts, publishes with revision checks; public reads never use drafts.
-- Layered design lives as one JSON string in `display_prefs.designLayers`, normalized by `normalizeDesignLayers` server-side and on render. Why: display_prefs is flat; client input stays untrusted.
 - Rate limits are counted in Neon (`rate_limits`, db/64) via `hitRateLimit`, failing open on database errors. Why: limits must hold across server instances without locking everyone out.
 - Community stats are live counts; reviews show only when `approved` (db/65); empty sections hide. Why: no fake social proof.
 - Approving a verification cancels that user's other open same-tier requests (`verification-dedupe.ts`). Why: no duplicate admin work.
