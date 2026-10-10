@@ -177,7 +177,11 @@ export default function Stats() {
     const header = "scanned_at,country,device,browser,os";
     const rows = data.scans.map((s) =>
       [s.scanned_at, s.country ?? "", s.device ?? "", s.browser ?? "", s.os ?? ""]
-        .map((v) => `"${String(v).replace(/"/g, '""')}"`)
+        .map((v) => {
+          // Neutralise spreadsheet formulas (=, +, -, @, tab, CR) from visitor data.
+          const text = String(v).replace(/^[=+\-@\t\r]/, "'$&");
+          return `"${text.replace(/"/g, '""')}"`;
+        })
         .join(","),
     );
     const blob = new Blob([[header, ...rows].join("\n")], { type: "text/csv" });

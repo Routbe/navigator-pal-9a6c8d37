@@ -74,7 +74,11 @@ export async function readDonationTarget(rawHandle: string): Promise<DonationTar
     badgeVisible: prefs.badgeVisible,
     badgeType: prefs.badgeType,
     badgeNameFormat: prefs.badgeNameFormat,
-    legalName: (profile["verified_legal_name"] as string | null) ?? null,
+    // Only shared when the creator shows their verified badge on this page.
+    legalName:
+      profile["verified"] === true && prefs.badgeVisible
+        ? ((profile["verified_legal_name"] as string | null) ?? null)
+        : null,
   };
 }
 
@@ -210,25 +214,21 @@ export async function markDonation(
 
 export type DonationStatus = {
   status: string;
-  amountCents: number;
   handle: string;
-  message: string | null;
 };
 
 export async function readDonationStatus(donationId: string): Promise<DonationStatus | null> {
   if (!/^[0-9a-f-]{36}$/i.test(donationId)) return null;
   try {
     const rows = (await sql`
-      select status, amount_cents, handle, message
+      select status, handle
         from public.creator_donations where id = ${donationId} limit 1
     `) as Row[];
     const row = rows[0];
     if (!row) return null;
     return {
       status: String(row["status"]),
-      amountCents: Number(row["amount_cents"] ?? 0),
       handle: String(row["handle"]),
-      message: (row["message"] as string | null) ?? null,
     };
   } catch {
     return null;
